@@ -4,17 +4,16 @@ import requests
 
 st.set_page_config(
     page_title=" AdOps Optimizer", 
-    page_icon="📊", 
+    page_icon="", 
     layout="centered"
 )
 
-st.title("📊  AdOps Optimization Engine")
-st.markdown("### Client-Facing Real-Time Bidding Yield Optimization Dashboard")
-st.write("This frontend dashboard communicates directly with our decoupled FastAPI ML service layer.")
+st.title("  AdOps Optimization Engine")
+
 st.write("---")
 
 
-st.subheader("🛠️ Campaign Adjustments & Targeting Matrix")
+st.subheader(" Campaign Adjustments & Targeting Matrix")
 
 
 col1, col2 = st.columns(2)
@@ -31,9 +30,9 @@ with col2:
 st.write("---")
 
 
-FASTAPI_URL  = "https://adops-optimization.onrender.com"
+FASTAPI_URL = "https://adops-optimization.onrender.com/predict"
 
-if st.button("🚀 Run Performance Forecast", use_container_width=True):
+if st.button(" Run Performance Forecast", use_container_width=True):
     
     
     payload = {
@@ -58,7 +57,7 @@ if st.button("🚀 Run Performance Forecast", use_container_width=True):
                 st.success("Analysis Complete!")
                 st.metric(label="Predicted Click-Through Rate (CTR)", value=f"{predicted_ctr}%")
             else:
-                st.error(f"❌ Server Error: Received HTTP status code {response.status_code}")
+                st.error(f" Server Error: Received HTTP status code {response.status_code}")
                 
         except requests.exceptions.ConnectionError:
-            st.error("❌ Connection Refused: Is your FastAPI backend app.py actively running on port 8000?")
+            st.error(" Connection Refused: Is your FastAPI backend app.py actively running on port 8000?")
