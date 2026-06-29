@@ -1,9 +1,7 @@
 import streamlit as st
 import requests
 
-# ==============================================================================
-# 1. PAGE CONFIGURATION & LAYOUT SETUP
-# ==============================================================================
+
 st.set_page_config(
     page_title=" AdOps Optimizer", 
     page_icon="📊", 
@@ -15,12 +13,10 @@ st.markdown("### Client-Facing Real-Time Bidding Yield Optimization Dashboard")
 st.write("This frontend dashboard communicates directly with our decoupled FastAPI ML service layer.")
 st.write("---")
 
-# ==============================================================================
-# 2. INTERACTIVE INPUT FORMS & SLIDERS
-# ==============================================================================
+
 st.subheader("🛠️ Campaign Adjustments & Targeting Matrix")
 
-# Split inputs into two clean visual columns
+
 col1, col2 = st.columns(2)
 
 with col1:
@@ -34,16 +30,12 @@ with col2:
 
 st.write("---")
 
-# ==============================================================================
-# 3. FASTAPI NETWORK CONNECTION & EXECUTION LOOP
-# ==============================================================================
-# Define the local gateway address where your FastAPI is actively listening
-FASTAPI_URL = "http://127.0.0.1:8000/predict"
 
-# Trigger the prediction via a Network Request when the button is clicked
+FASTAPI_URL  = "https://adops-prediction-api.onrender.com/predict"
+
 if st.button("🚀 Run Performance Forecast", use_container_width=True):
     
-    # Pack the slider variables into the exact JSON template your Pydantic schema expects
+    
     payload = {
         "bid_cpc": float(bid_cpc),
         "historical_impressions": int(historical_impressions),
@@ -52,17 +44,17 @@ if st.button("🚀 Run Performance Forecast", use_container_width=True):
         "app_category": app_category
     }
     
-    # Show a sleek loading spinner while the network port is communicating
+   
     with st.spinner("Transmitting parameters to local ML microservice cluster..."):
         try:
-            # Send the data payload over port 8000 to FastAPI
+            
             response = requests.post(FASTAPI_URL, json=payload)
             
             if response.status_code == 200:
                 result = response.json()
                 predicted_ctr = result["predicted_click_through_rate_percentage"]
                 
-                # Render the final prediction result beautifully on screen
+                
                 st.success("Analysis Complete!")
                 st.metric(label="Predicted Click-Through Rate (CTR)", value=f"{predicted_ctr}%")
             else:
