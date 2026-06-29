@@ -31,7 +31,7 @@ with col2:
 st.write("---")
 
 
-FASTAPI_URL  = "https://adops-prediction-api.onrender.com/predict"
+FASTAPI_URL  = "https://adops-optimization.onrender.com"
 
 if st.button("🚀 Run Performance Forecast", use_container_width=True):
     
